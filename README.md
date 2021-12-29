@@ -39,4 +39,14 @@ You should see something like this:
 
 ### Manual testing
 
-Obtain bearer token for **client1**: `curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'grant_type=client_credentials&client_id=service1&client_secret=28zlyEXPHBtOOg1SOeA17xCnbCjeaFrG' "http://localhost:8080/auth/realms/demo/protocol/openid-connect/token"`. Based on the access control model, given token should give access to **Service2.Resource2** and **Service3.Resource2**: `curl -H "Authorization: Bearer {access_token_from_response}" http://localhost:10002/resource2`.
+Obtain bearer token for **client1**: 
+
+```
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'grant_type=client_credentials&client_id=service1&client_secret=28zlyEXPHBtOOg1SOeA17xCnbCjeaFrG' "http://localhost:8080/auth/realms/demo/protocol/openid-connect/token"
+```
+
+Based on the access control model, given token should give access to **Service2.Resource2** and **Service3.Resource2**: 
+
+```
+curl -H "Authorization: Bearer {access_token_from_response}" http://localhost:10002/resource2
+```
