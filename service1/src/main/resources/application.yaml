@@ -1,0 +1,23 @@
+server:
+  port: 10001
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/demo
+          jwk-set-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/certs
+      client:
+        registration:
+          keycloak:
+            client-id: service1
+            client-secret: 28zlyEXPHBtOOg1SOeA17xCnbCjeaFrG
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/auth
+            token-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/token
+            user-info-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/certs
+            introspection-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/token/introspect
