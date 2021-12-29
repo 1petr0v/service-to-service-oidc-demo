@@ -15,11 +15,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class CustomConfigs {
 
+    // Webclient - regular HTTP client to perform calls.
+    // It was chosen because it supports OAuth2 out-of-the box
     @Bean
     @Autowired
     WebClient keycloakWebclient(final OAuth2AuthorizedClientManager authorizedClientManager) {
         ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
                 new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+        // keycloak here is taken from spring:security:oauth2:client:<registration|provider>:keycloak
         oauth2Client.setDefaultClientRegistrationId("keycloak");
         return WebClient.builder()
                 .apply(oauth2Client.oauth2Configuration())
@@ -28,8 +31,8 @@ public class CustomConfigs {
 
     @Bean
     OAuth2AuthorizedClientManager authorizedClientManager(
-            ClientRegistrationRepository clientRegistrationRepository,
-            OAuth2AuthorizedClientRepository authorizedClientRepository) {
+            final ClientRegistrationRepository clientRegistrationRepository,
+            final OAuth2AuthorizedClientRepository authorizedClientRepository) {
 
         OAuth2AuthorizedClientProvider authorizedClientProvider =
                 OAuth2AuthorizedClientProviderBuilder.builder()
@@ -38,8 +41,7 @@ public class CustomConfigs {
                         .build();
 
         DefaultOAuth2AuthorizedClientManager authorizedClientManager =
-                new DefaultOAuth2AuthorizedClientManager(
-                        clientRegistrationRepository, authorizedClientRepository);
+                new DefaultOAuth2AuthorizedClientManager(clientRegistrationRepository, authorizedClientRepository);
         authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
 
         return authorizedClientManager;

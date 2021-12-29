@@ -18,18 +18,22 @@ public class EndpointController {
         this.webclient = webclient;
     }
 
+    // Secured resource
     @PreAuthorize("hasAuthority('SCOPE_service1:resource1')")
     @GetMapping("/resource1")
     public String resource1() {
         return "Service1.Resource1";
     }
 
+    // Secured resource
     @PreAuthorize("hasAuthority('SCOPE_service1:resource2')")
     @GetMapping("/resource2")
     public String resource2() {
         return "Service1.Resource2";
     }
 
+    // Resource for demo and testing purposes only.
+    // AuthN and AuthZ not required.
     @GetMapping("/public/jump/{toService}/{toResource}")
     public String jumpEndpoint(@PathVariable("toService") final String toService,
                                @PathVariable("toResource") final String toResource) {
@@ -44,9 +48,12 @@ public class EndpointController {
         }
 
         final String calleeUrl = service + "/" + toResource;
+
+        // The below code is no more then just plain HTTP call to a protected service.
         final String response1 = webclient.get().uri(calleeUrl)
                 .exchangeToMono(x -> {
                     final int rawStatusCode = x.rawStatusCode();
+                    // If Java version < 17, rewrite this method.
                     return switch (rawStatusCode) {
                         case 401, 403 -> Mono.just("Access denied");
                         case 200 -> x.bodyToMono(String.class);
