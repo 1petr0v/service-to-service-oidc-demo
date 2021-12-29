@@ -1,5 +1,7 @@
 # Service-to-service Spring 5 + OAuth2 (OIDC) integration
 
+Code for my article on [Medium](https://medium.com/@1petr0v/service-to-service-spring-5-oauth2-integration-1fcdcec55a39).
+
 ## Architecture
 
 <img src="./doc/service-to-service-oidc-diagram.png" width="1000">
@@ -17,7 +19,7 @@ Requirements:
 - ~~Keyboard and mouse~~
 
 1. Start [Keycloak](https://www.keycloak.org/) in docker: `docker run -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin quay.io/keycloak/keycloak:16.1.0`. If you don't want to use docker, feel free to launch stand-alone instance.
-2. Configure Keycloak realm, clients and scopes as I describe in the article (coming soon!).
+2. Configure Keycloak realm, clients and scopes as I describe in the [article](https://medium.com/@1petr0v/service-to-service-spring-5-oauth2-integration-1fcdcec55a39).
 3. Update clients and their secrets for each service at respective `application.yaml` files.
 4. Run *all 3 services*. Example: `cd {PROJECT_ROOT_FOLDER}/service1 && gradle bootRun`.
 
